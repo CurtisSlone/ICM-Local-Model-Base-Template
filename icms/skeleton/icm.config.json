@@ -1,0 +1,24 @@
+{
+  "$comment": "ICM config template. Copy this whole skeleton dir, rename, and edit. `model`/`embed_model` choose the local Ollama models. `tools` picks which capabilities the MCP server exposes (kinds are fixed: verify | docs_search | kb_answer | generate_verify) and names/describes them for your domain. `verify` is your deterministic oracle — change it to your language's compiler/linter/test runner; {code} is substituted with the candidate source.",
+  "name": "my-icm",
+  "domain": "DESCRIBE YOUR DOMAIN HERE",
+  "model": "mistral",
+  "embed_model": "mistral",
+  "tools": [
+    { "name": "verify",      "kind": "verify",          "description": "Verify source compiles/passes the oracle. Returns PASS or the exact diagnostics." },
+    { "name": "docs_search", "kind": "docs_search",     "description": "Search the reference doc corpus. Returns the most relevant items." },
+    { "name": "kb_answer",   "kind": "kb_answer",       "description": "Answer from the curated KB, falling back to docs when uncovered." },
+    { "name": "generate",    "kind": "generate_verify", "description": "Generate code for a task; return only oracle-verified output." }
+  ],
+  "verify": {
+    "$comment": "EXAMPLE: Rust via cargo. Replace project_files + commands for your language. For Python you might use {'main.py':'{code}'} + check ['python','-m','py_compile','main.py'] + run ['python','main.py']. Drop `run`/`test` if you only need a compile check.",
+    "project_files": {
+      "Cargo.toml": "[package]\nname = \"icm_verify_demo\"\nversion = \"0.0.0\"\nedition = \"2021\"\n\n[[bin]]\nname = \"demo\"\npath = \"src/main.rs\"\n",
+      "src/main.rs": "{code}"
+    },
+    "env": { "CARGO_TERM_COLOR": "never" },
+    "check": { "command": ["cargo", "clippy", "--quiet", "--offline", "--", "-D", "warnings"], "timeout": 60 },
+    "test": { "command": ["cargo", "test", "--quiet", "--offline"], "detect": "#[test]", "timeout": 60 },
+    "run": { "command": ["cargo", "run", "--quiet", "--offline"], "timeout": 15 }
+  }
+}

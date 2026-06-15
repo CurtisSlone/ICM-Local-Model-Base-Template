@@ -1,0 +1,11 @@
+# python
+__pycache__/
+*.pyc
+
+# per-run / generated artifacts inside any ICM you create here
+runs/
+build/
+target/
+.emb_cache.json
+.docemb_cache.json
+**/refdocs/std.json

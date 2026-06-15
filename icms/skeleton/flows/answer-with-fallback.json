@@ -1,0 +1,57 @@
+{
+  "name": "answer-with-fallback",
+  "description": "Answer a Rust question from the curated KB; if the ground-check says the KB doesn't cover it, fall back to searching the std API docs (tier 2) and answer from those. Two-tier escalation triggered by the existing uncertainty signal.",
+  "nodes": [
+    {
+      "id": "route",
+      "kind": "route",
+      "comment": "Constrained pick of the relevant KB entry id(s).",
+      "inputs": [
+        "request"
+      ],
+      "outputs": [
+        "entry_ids"
+      ]
+    },
+    {
+      "id": "ground",
+      "kind": "ground",
+      "comment": "Read the entries and run the ground-check. answerable=False is the uncertainty signal that escalates to tier 2.",
+      "inputs": [
+        "request",
+        "entry_ids"
+      ],
+      "outputs": [
+        "context",
+        "answerable"
+      ]
+    },
+    {
+      "id": "docsearch",
+      "kind": "docsearch",
+      "comment": "Tier-2 fallback: hybrid (BM25 + embed) search of the std docs. No-op when the KB already covered it (answerable=True).",
+      "inputs": [
+        "request",
+        "answerable"
+      ],
+      "outputs": [
+        "doc_text"
+      ]
+    },
+    {
+      "id": "answer",
+      "kind": "answer",
+      "comment": "Answer from KB context (tier 1) if covered, else from std doc excerpts (tier 2), else decline.",
+      "inputs": [
+        "request",
+        "context",
+        "answerable",
+        "doc_text"
+      ],
+      "outputs": [
+        "answer",
+        "tier"
+      ]
+    }
+  ]
+}

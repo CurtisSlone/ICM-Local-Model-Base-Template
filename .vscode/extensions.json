@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "continue.continue"
+  ],
+  "_comment": "continue.continue lets a local Ollama model use an ICM's MCP server in-IDE (no frontier subscription, no custom plugin)."
+}

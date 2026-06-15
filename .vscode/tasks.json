@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ICM: Setup / preflight",
+      "type": "shell",
+      "command": "python3 setup.py",
+      "problemMatcher": [],
+      "detail": "Check Ollama + the Rust toolchain. (This is the engine/template.)",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      "label": "ICM: MCP protocol test (skeleton)",
+      "type": "shell",
+      "command": "python3 test_mcp.py icms/skeleton",
+      "problemMatcher": [],
+      "detail": "Drive the MCP server against the bundled skeleton ICM — no model needed.",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      "label": "ICM: New ICM from skeleton",
+      "type": "shell",
+      "command": "cp -r icms/skeleton ${input:icmName} && echo 'Created ${input:icmName} — edit its icm.config.json + manifest.json + kb/'",
+      "problemMatcher": [],
+      "detail": "Copy the skeleton to start a new domain ICM."
+    },
+    {
+      "label": "ICM: Run MCP server for an ICM",
+      "type": "shell",
+      "command": "python3 icm_mcp.py --icm ${input:icmDir}",
+      "problemMatcher": [],
+      "detail": "Start the generic MCP server pointed at an ICM directory."
+    }
+  ],
+  "inputs": [
+    { "id": "icmName", "type": "promptString", "description": "New ICM directory name", "default": "my-icm" },
+    { "id": "icmDir", "type": "promptString", "description": "Path to an ICM directory", "default": "icms/skeleton" }
+  ]
+}

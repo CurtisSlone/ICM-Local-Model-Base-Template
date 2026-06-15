@@ -1,0 +1,6 @@
+{
+  "$comment": "Labelled routing queries for icm_embed.py --eval (recall@K). Phrase queries to AVOID the entry's own title words so it tests semantic match, not keyword overlap. Add 2+ per entry. recall@K tells you whether the embedding pre-filter is safe to turn on.",
+  "cases": [
+    { "query": "a question whose answer lives in the example entry", "expected": "example-topic" }
+  ]
+}

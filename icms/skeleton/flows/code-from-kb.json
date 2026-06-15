@@ -1,0 +1,34 @@
+{
+  "name": "code-from-kb",
+  "description": "Turn a Rust coding request into compiler-verified code. Routes to the relevant KB entry for grounding, generates code against that context, then verifies and repairs against cargo. An authored, stateless chain: each node declares exactly the inputs it sees.",
+  "nodes": [
+    {
+      "id": "route",
+      "kind": "route",
+      "comment": "Constrained pick of the KB entry whose idioms are relevant. Model proposes from an enum; code executes.",
+      "inputs": ["request"],
+      "outputs": ["entry_ids"]
+    },
+    {
+      "id": "ground",
+      "kind": "read",
+      "comment": "CODE opens the chosen entries (no skippable tool) and assembles reference context. The model is not in this node.",
+      "inputs": ["entry_ids"],
+      "outputs": ["context"]
+    },
+    {
+      "id": "generate",
+      "kind": "generate",
+      "comment": "Constrained {code} generation. Sees the request and the KB context for idioms — NOT entry_ids, NOT the routing rationale.",
+      "inputs": ["request", "context"],
+      "outputs": ["code"]
+    },
+    {
+      "id": "verify",
+      "kind": "verify",
+      "comment": "The deterministic oracle: cargo clippy -D warnings + a real run, with bounded repair. Sees only request + code.",
+      "inputs": ["request", "code"],
+      "outputs": ["ok", "code", "repairs"]
+    }
+  ]
+}

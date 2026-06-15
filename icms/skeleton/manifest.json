@@ -1,0 +1,13 @@
+{
+  "name": "my-icm",
+  "description": "One-line description of this knowledge base.",
+  "domain": "DESCRIBE YOUR DOMAIN HERE",
+  "entries": [
+    {
+      "id": "example-topic",
+      "title": "Example topic",
+      "path": "kb/example-topic.md",
+      "summary": "A sharp, DISCRIMINATING one-line summary — this is the only thing the router sees. Make summaries non-overlapping; routing degrades when two summaries blur together."
+    }
+  ]
+}
