@@ -6,7 +6,7 @@ directory you point it at. Same engine, any domain — swap the ICM dir to chang
 one config field to change model. Pure Python stdlib — no pip install.
 
 > **Worked example:** a complete local Rust coding assistant built on this engine —
-> **[ICM-Local-Model-Rust-Example](https://github.com/CurtisSlone/ICM-Local-Model-Rust-Example)**.
+> **[ICM-Local-Model-Rust-Example]([https://github.com/CurtisSlone/ICM-Local-Model-Rust-Example](https://github.com/CurtisSlone/ICM-Local-Model-Rust-Coding-Assistant))**.
 > Start there if you want to *see it run*; come here to *build your own*.
 >
 > Built on **ICM** by Jake Van Clief & David McDermott (paper included as `2603.16021v2.pdf`;
